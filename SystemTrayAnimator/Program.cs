@@ -12,16 +12,14 @@ namespace SystemTrayAnimator
         [STAThread]
         static void Main()
         {
-            AppDomain.CurrentDomain.UnhandledException += OnCurrentDomainUnhandledException;
-            Application.ThreadException += OnThreadException;
-
             _mutex = new Mutex(true, AssemblyUtils.AssemblyTitle, out var createNew);
             if (!createNew)
             {
                 return;
             }
 
-
+            AppDomain.CurrentDomain.UnhandledException += OnCurrentDomainUnhandledException;
+            Application.ThreadException += OnThreadException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainApplicationContext());

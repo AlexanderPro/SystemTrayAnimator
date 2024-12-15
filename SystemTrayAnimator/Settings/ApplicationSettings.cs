@@ -6,38 +6,38 @@ namespace SystemTrayAnimator.Settings
 {
     public class ApplicationSettings : ICloneable
     {
-        private const string DefaultIconDirectoryName = "Icons";
+        private const string DefaultDirectoryName = "Icons";
         private const string DefaultPauseFileName = "Pause.txt";
-        private const string DefaultListFileName = "Files.xml";
+        private const string DefaultSupportedFileExtensions = "*.ico";
 
         private const int DeafultIntervalBetweenFrames = 200;
         private const int DeafultIntervalForShowOneFrame = 0;
 
-        public string IconDirectoryName { get; set; }
+        public string DirectoryName { get; set; }
 
         public string PauseFileName { get; set; }
 
-        public string ListFileName { get; set; }
+        public string SupportedFileExtensions { get; set; }
 
         public int IntervalBetweenFrames { get; set; }
 
         public int IntervalForShowOneFrame { get; set; }
 
+        public bool IsPaused { get; set; }
 
         public ApplicationSettings()
         {
-            IconDirectoryName = Path.Combine(AssemblyUtils.AssemblyDirectory, DefaultIconDirectoryName);
-            PauseFileName = DefaultPauseFileName;
-            ListFileName = DefaultListFileName;
+            DirectoryName = Path.Combine(AssemblyUtils.AssemblyDirectory, DefaultDirectoryName);
+            PauseFileName = Path.Combine(AssemblyUtils.AssemblyDirectory, DefaultPauseFileName);
+            SupportedFileExtensions = DefaultSupportedFileExtensions;
             IntervalBetweenFrames = DeafultIntervalBetweenFrames;
             IntervalForShowOneFrame = DeafultIntervalForShowOneFrame;
         }
 
         public object Clone() => new ApplicationSettings
         {
-            IconDirectoryName = IconDirectoryName,
+            DirectoryName = DirectoryName,
             PauseFileName = PauseFileName,
-            ListFileName = ListFileName,
             IntervalBetweenFrames = IntervalBetweenFrames,
             IntervalForShowOneFrame = IntervalForShowOneFrame
         };
@@ -79,9 +79,8 @@ namespace SystemTrayAnimator.Settings
                 return false;
             }
 
-            if (string.Compare(IconDirectoryName, other.IconDirectoryName, StringComparison.CurrentCultureIgnoreCase) != 0 ||
-                string.Compare(PauseFileName, other.PauseFileName, StringComparison.CurrentCultureIgnoreCase) != 0 ||
-                string.Compare(ListFileName, other.ListFileName, StringComparison.CurrentCultureIgnoreCase) != 0)
+            if (string.Compare(DirectoryName, other.DirectoryName, StringComparison.CurrentCultureIgnoreCase) != 0 ||
+                string.Compare(PauseFileName, other.PauseFileName, StringComparison.CurrentCultureIgnoreCase) != 0)
             {
                 return false;
             }
@@ -97,9 +96,8 @@ namespace SystemTrayAnimator.Settings
         public override int GetHashCode()
         {
             var hashCode = 0;
-            hashCode ^= IconDirectoryName.GetHashCode();
+            hashCode ^= DirectoryName.GetHashCode();
             hashCode ^= PauseFileName.GetHashCode();
-            hashCode ^= ListFileName.GetHashCode();
             hashCode ^= IntervalBetweenFrames.GetHashCode();
             hashCode ^= IntervalForShowOneFrame.GetHashCode();
             return hashCode;

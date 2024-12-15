@@ -48,6 +48,7 @@
     <Compile Include="AccurateTimer.cs" />
     <Compile Include="AutoStarter.cs" />
     <Compile Include="Frame.cs" />
+    <Compile Include="FrameList.cs" />
     <Compile Include="MainApplicationContext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
