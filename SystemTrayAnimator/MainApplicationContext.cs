@@ -35,6 +35,7 @@ namespace SystemTrayAnimator
             _lockObject = new object();
             _frameIndex = 0;
             _frames = new FrameList();
+            _timer = new AccurateTimer(ShowFrame);
 
             ReadDirectory();
 
@@ -52,10 +53,10 @@ namespace SystemTrayAnimator
             _watcher = new FileSystemWatcher();
             _watcher.Path = _settings.DirectoryName;
             _watcher.NotifyFilter = NotifyFilters.LastWrite;
+            _watcher.IncludeSubdirectories = _settings.IncludeSubdirectories;
             _watcher.Filter = _settings.SupportedFileExtensions;
             _watcher.Changed += WatcherOnChanged;
 
-            _timer = new AccurateTimer(ShowFrame);
             var pauseFileName = Path.Combine(_settings.DirectoryName, _settings.PauseFileName);
             if (File.Exists(pauseFileName))
             {
@@ -79,12 +80,14 @@ namespace SystemTrayAnimator
             var directoryName = string.Empty;
             var pauseFileName = string.Empty;
             var supportedFileExtensions = string.Empty;
+            var includeSubdirectories = false;
             var isPaused = false;
             lock (_lockObject)
             {
                 directoryName = _settings.DirectoryName;
                 pauseFileName = Path.Combine(_settings.DirectoryName, _settings.PauseFileName);
                 supportedFileExtensions = _settings.SupportedFileExtensions;
+                includeSubdirectories = _settings.IncludeSubdirectories;
                 isPaused = _settings.IsPaused;
             }
 
@@ -97,27 +100,28 @@ namespace SystemTrayAnimator
             {
                 lock (_lockObject)
                 {
+                    _timer.Stop();
                     _settings.IsPaused = true;
                     _systemTrayMenu.CheckMenuItemPause(true);
                 }
                 return;
             }
 
-            if (_frames != null)
-            {
-                foreach (var frame in _frames)
-                {
-                    frame.Dispose();
-                }
-                _frames.Clear();
-            }
-
-            var fileExtensions = supportedFileExtensions.ToLower().Split(';', ',');
-            var fileNames = Directory.GetFiles(directoryName).Where(x => fileExtensions.Contains(Path.GetExtension(x.ToLower()))).OrderBy(x => x).ToArray();
+            //var fileExtensions = supportedFileExtensions.ToLower().Split(';', ',').Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToList();
+            var fileNames = Directory.EnumerateFiles(directoryName, supportedFileExtensions, includeSubdirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).OrderBy(x => x).ToArray();
+            var frames = new FrameList(fileNames);
             lock (_lockObject)
             {
-                _frames = new FrameList(fileNames);
-                _frameIndex = 0;
+                if (!_frames.Equals(frames))
+                {
+                    ClearFrames(_frames);
+                    _frames = frames;
+                    _frameIndex = 0;
+                }
+                else
+                {
+                    ClearFrames(frames);
+                }
             }
         }
 
@@ -145,6 +149,15 @@ namespace SystemTrayAnimator
             }
         }
 
+        private void ClearFrames(FrameList frames)
+        {
+            foreach (var frame in frames)
+            {
+                frame.Dispose();
+            }
+            frames.Clear();
+        }
+
         private void MenuItemAutoStartClick(object sender, EventArgs e)
         {
             var keyName = AssemblyUtils.AssemblyProductName;
@@ -168,7 +181,10 @@ namespace SystemTrayAnimator
                 if (_settings.IsPaused)
                 {
                     var pauseFileName = Path.Combine(_settings.DirectoryName, _settings.PauseFileName);
-                    File.Delete(pauseFileName);
+                    if (File.Exists(pauseFileName))
+                    {
+                        File.Delete(pauseFileName);
+                    }
                     _timer.Stop();
                     _settings.IsPaused = !_settings.IsPaused;
                     ((ToolStripMenuItem)sender).Checked = _settings.IsPaused;
@@ -199,6 +215,7 @@ namespace SystemTrayAnimator
                 _settingsForm = new SettingsForm(_settings);
                 if (_settingsForm.DialogResult == DialogResult.OK)
                 {
+                    _settings = _settingsForm.Settings;
                     ApplicationSettingsFile.Save(_settingsForm.Settings);
                 }                
             }

@@ -7,12 +7,14 @@ namespace SystemTrayAnimator.Settings
     public class ApplicationSettings : ICloneable
     {
         private const string DefaultDirectoryName = "Icons";
+        private const bool DefaultIncludeSubdirectories = false;
         private const string DefaultPauseFileName = "Pause.txt";
         private const string DefaultSupportedFileExtensions = "*.ico";
-
-        private const int DeafultIntervalInMilliseconds = 200;
+        private const int DefaultIntervalInMilliseconds = 200;
 
         public string DirectoryName { get; set; }
+
+        public bool IncludeSubdirectories { get; set; }
 
         public string PauseFileName { get; set; }
 
@@ -25,15 +27,18 @@ namespace SystemTrayAnimator.Settings
         public ApplicationSettings()
         {
             DirectoryName = Path.Combine(AssemblyUtils.AssemblyDirectory, DefaultDirectoryName);
+            IncludeSubdirectories = DefaultIncludeSubdirectories;
             PauseFileName = DefaultPauseFileName;
             SupportedFileExtensions = DefaultSupportedFileExtensions;
-            Interval = DeafultIntervalInMilliseconds;
+            Interval = DefaultIntervalInMilliseconds;
         }
 
         public object Clone() => new ApplicationSettings
         {
             DirectoryName = DirectoryName,
+            IncludeSubdirectories = IncludeSubdirectories,
             PauseFileName = PauseFileName,
+            SupportedFileExtensions = SupportedFileExtensions,
             Interval = Interval
         };
 
@@ -75,12 +80,13 @@ namespace SystemTrayAnimator.Settings
             }
 
             if (string.Compare(DirectoryName, other.DirectoryName, StringComparison.CurrentCultureIgnoreCase) != 0 ||
-                string.Compare(PauseFileName, other.PauseFileName, StringComparison.CurrentCultureIgnoreCase) != 0)
+                string.Compare(PauseFileName, other.PauseFileName, StringComparison.CurrentCultureIgnoreCase) != 0 ||
+                string.Compare(SupportedFileExtensions, other.SupportedFileExtensions, StringComparison.CurrentCultureIgnoreCase) != 0)
             {
                 return false;
             }
 
-            if (Interval != other.Interval)
+            if (IncludeSubdirectories != other.IncludeSubdirectories || Interval != other.Interval)
             {
                 return false;
             }
@@ -93,7 +99,9 @@ namespace SystemTrayAnimator.Settings
             var hashCode = 0;
             hashCode ^= DirectoryName.GetHashCode();
             hashCode ^= PauseFileName.GetHashCode();
+            hashCode ^= SupportedFileExtensions.GetHashCode();
             hashCode ^= Interval.GetHashCode();
+            hashCode ^= IncludeSubdirectories.GetHashCode();
             return hashCode;
         }
     }
