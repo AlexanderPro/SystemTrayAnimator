@@ -73,6 +73,9 @@
     <Compile Include="Utils\AssemblyUtils.cs" />
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\SystemUtils.cs" />
+    <EmbeddedResource Include="Forms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

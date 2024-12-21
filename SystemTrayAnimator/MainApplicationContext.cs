@@ -29,13 +29,18 @@ namespace SystemTrayAnimator
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to read the settings.{Environment.NewLine}{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
+                return;
             }
 
             _lockObject = new object();
             _frameIndex = 0;
             _frames = new FrameList();
             _timer = new AccurateTimer(ShowFrame);
+
+            if (!Directory.Exists(_settings.DirectoryName))
+            {
+                Directory.CreateDirectory(_settings.DirectoryName);
+            }
 
             ReadDirectory();
 
@@ -91,7 +96,7 @@ namespace SystemTrayAnimator
                 isPaused = _settings.IsPaused;
             }
 
-            if (isPaused)
+            if (isPaused || !Directory.Exists(directoryName))
             {
                 return;
             }
