@@ -10,8 +10,7 @@ namespace SystemTrayAnimator.Settings
         private const string DefaultPauseFileName = "Pause.txt";
         private const string DefaultSupportedFileExtensions = "*.ico";
 
-        private const int DeafultIntervalBetweenFrames = 200;
-        private const int DeafultIntervalForShowOneFrame = 0;
+        private const int DeafultIntervalInMilliseconds = 200;
 
         public string DirectoryName { get; set; }
 
@@ -19,27 +18,23 @@ namespace SystemTrayAnimator.Settings
 
         public string SupportedFileExtensions { get; set; }
 
-        public int IntervalBetweenFrames { get; set; }
-
-        public int IntervalForShowOneFrame { get; set; }
+        public int Interval { get; set; }
 
         public bool IsPaused { get; set; }
 
         public ApplicationSettings()
         {
             DirectoryName = Path.Combine(AssemblyUtils.AssemblyDirectory, DefaultDirectoryName);
-            PauseFileName = Path.Combine(AssemblyUtils.AssemblyDirectory, DefaultPauseFileName);
+            PauseFileName = DefaultPauseFileName;
             SupportedFileExtensions = DefaultSupportedFileExtensions;
-            IntervalBetweenFrames = DeafultIntervalBetweenFrames;
-            IntervalForShowOneFrame = DeafultIntervalForShowOneFrame;
+            Interval = DeafultIntervalInMilliseconds;
         }
 
         public object Clone() => new ApplicationSettings
         {
             DirectoryName = DirectoryName,
             PauseFileName = PauseFileName,
-            IntervalBetweenFrames = IntervalBetweenFrames,
-            IntervalForShowOneFrame = IntervalForShowOneFrame
+            Interval = Interval
         };
 
         public override bool Equals(object other)
@@ -85,7 +80,7 @@ namespace SystemTrayAnimator.Settings
                 return false;
             }
 
-            if (IntervalBetweenFrames != other.IntervalBetweenFrames || IntervalForShowOneFrame != other.IntervalForShowOneFrame)
+            if (Interval != other.Interval)
             {
                 return false;
             }
@@ -98,9 +93,8 @@ namespace SystemTrayAnimator.Settings
             var hashCode = 0;
             hashCode ^= DirectoryName.GetHashCode();
             hashCode ^= PauseFileName.GetHashCode();
-            hashCode ^= IntervalBetweenFrames.GetHashCode();
-            hashCode ^= IntervalForShowOneFrame.GetHashCode();
+            hashCode ^= Interval.GetHashCode();
             return hashCode;
-        }       
+        }
     }
 }

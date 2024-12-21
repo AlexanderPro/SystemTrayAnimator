@@ -86,10 +86,9 @@ namespace SystemTrayAnimator.Settings
             var settings = new ApplicationSettings();
             var document = XDocument.Load(stream);
             var rootElement = document.XPathSelectElement("/systemTrayAnimator");
-            settings.DirectoryName = rootElement.XPathSelectElement("/iconDirectoryName").Value;
+            settings.DirectoryName = rootElement.XPathSelectElement("/directoryName").Value;
             settings.PauseFileName = rootElement.XPathSelectElement("/pauseFileName").Value;
-            settings.IntervalBetweenFrames = int.Parse(rootElement.XPathSelectElement("/intervalBetweenFrames").Value);
-            settings.IntervalForShowOneFrame = int.Parse(rootElement.XPathSelectElement("/intervalForShowOneFrame").Value);
+            settings.Interval = int.Parse(rootElement.XPathSelectElement("/interval").Value);
             return settings;
         }
 
@@ -97,10 +96,9 @@ namespace SystemTrayAnimator.Settings
         {
             var document = new XDocument();
             document.Add(new XElement("systemTrayAnimator",
-                                     new XAttribute("iconDirectoryName", settings.DirectoryName),
+                                     new XAttribute("directoryName", settings.DirectoryName),
                                      new XAttribute("pauseFileName", settings.PauseFileName),
-                                     new XAttribute("intervalBetweenFrames", settings.IntervalBetweenFrames.ToString()),
-                                     new XAttribute("intervalForShowOneFrame", ((int)settings.IntervalForShowOneFrame).ToString())));
+                                     new XAttribute("interval", settings.Interval)));
             FileUtils.Save(fileName, document);
         }
     }

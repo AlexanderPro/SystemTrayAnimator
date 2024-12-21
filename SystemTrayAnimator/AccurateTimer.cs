@@ -26,20 +26,34 @@ namespace SystemTrayAnimator
         private int _timerId;
         private Action _action;
         private TimerEventDelegate _handler;
+        private bool _started;
 
-        public void Start(Action action, int delay)
+        public AccurateTimer(Action action)
         {
             _action = action;
-            timeBeginPeriod(1);
             _handler = new TimerEventDelegate(TimerCallback);
-            _timerId = timeSetEvent(delay, 0, _handler, IntPtr.Zero, EVENT_TYPE);
+            _started = false;
+        }
+
+        public void Start(int delay)
+        {
+            if (!_started)
+            {
+                timeBeginPeriod(1);
+                _timerId = timeSetEvent(delay, 0, _handler, IntPtr.Zero, EVENT_TYPE);
+                _started = true;
+            }
         }
 
         public void Stop()
         {
-            timeKillEvent(_timerId);
-            timeEndPeriod(1);
-            Thread.Sleep(100);
+            if (_started)
+            {
+                timeKillEvent(_timerId);
+                timeEndPeriod(1);
+                Thread.Sleep(100);
+                _started = false;
+            }
         }
 
         private void TimerCallback(int id, int msg, IntPtr user, int dw1, int dw2)
