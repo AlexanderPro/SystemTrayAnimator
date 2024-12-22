@@ -8,7 +8,6 @@ namespace SystemTrayAnimator.Settings
     {
         private const string DefaultDirectoryName = "Icons";
         private const bool DefaultIncludeSubdirectories = false;
-        private const string DefaultPauseFileName = "Pause.txt";
         private const string DefaultSupportedFileExtensions = "*.ico";
         private const int DefaultIntervalInMilliseconds = 200;
 
@@ -16,19 +15,18 @@ namespace SystemTrayAnimator.Settings
 
         public bool IncludeSubdirectories { get; set; }
 
-        public string PauseFileName { get; set; }
-
         public string SupportedFileExtensions { get; set; }
 
         public int Interval { get; set; }
 
         public bool IsPaused { get; set; }
 
+        public string Filter => SupportedFileExtensions.Replace(',', '|').Replace(';', '|');
+
         public ApplicationSettings()
         {
             DirectoryName = Path.Combine(AssemblyUtils.AssemblyDirectory, DefaultDirectoryName);
             IncludeSubdirectories = DefaultIncludeSubdirectories;
-            PauseFileName = DefaultPauseFileName;
             SupportedFileExtensions = DefaultSupportedFileExtensions;
             Interval = DefaultIntervalInMilliseconds;
         }
@@ -37,7 +35,6 @@ namespace SystemTrayAnimator.Settings
         {
             DirectoryName = DirectoryName,
             IncludeSubdirectories = IncludeSubdirectories,
-            PauseFileName = PauseFileName,
             SupportedFileExtensions = SupportedFileExtensions,
             Interval = Interval
         };
@@ -80,7 +77,6 @@ namespace SystemTrayAnimator.Settings
             }
 
             if (string.Compare(DirectoryName, other.DirectoryName, StringComparison.CurrentCultureIgnoreCase) != 0 ||
-                string.Compare(PauseFileName, other.PauseFileName, StringComparison.CurrentCultureIgnoreCase) != 0 ||
                 string.Compare(SupportedFileExtensions, other.SupportedFileExtensions, StringComparison.CurrentCultureIgnoreCase) != 0)
             {
                 return false;
@@ -98,7 +94,6 @@ namespace SystemTrayAnimator.Settings
         {
             var hashCode = 0;
             hashCode ^= DirectoryName.GetHashCode();
-            hashCode ^= PauseFileName.GetHashCode();
             hashCode ^= SupportedFileExtensions.GetHashCode();
             hashCode ^= Interval.GetHashCode();
             hashCode ^= IncludeSubdirectories.GetHashCode();

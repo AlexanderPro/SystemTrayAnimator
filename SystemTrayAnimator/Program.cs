@@ -22,7 +22,12 @@ namespace SystemTrayAnimator
             Application.ThreadException += OnThreadException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainApplicationContext());
+
+            var context = new MainApplicationContext();
+            if (!context.InitializationError)
+            {
+                Application.Run(context);
+            }
 
             _mutex.ReleaseMutex();
         }
