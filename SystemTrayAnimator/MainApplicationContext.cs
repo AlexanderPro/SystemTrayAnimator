@@ -197,9 +197,13 @@ namespace SystemTrayAnimator
                 _settingsForm = new SettingsForm(_settings);
                 if (_settingsForm.DialogResult == DialogResult.OK)
                 {
-                    _settings = _settingsForm.Settings;
-                    ApplicationSettingsFile.Save(_settingsForm.Settings);
-                }                
+                    lock(_lockObject)
+                    {
+                        _settings = _settingsForm.Settings;
+                        ApplicationSettingsFile.Save(_settingsForm.Settings);
+                    }
+                    ReadDirectory();
+                }
             }
 
             _settingsForm.Show();

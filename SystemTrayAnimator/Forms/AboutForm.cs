@@ -17,10 +17,16 @@ namespace SystemTrayAnimator.Forms
             linkUrl.Text = URL_SYSTEM_TRAY_ANIMATOR;
         }
 
-        private void CloseClick(object sender, EventArgs e) => Close();
+        private void ButtonOkClick(object sender, EventArgs e) => Close();
 
         private void LinkClick(object sender, EventArgs e) => SystemUtils.RunAs(SystemUtils.GetDefaultBrowserModuleName(), URL_SYSTEM_TRAY_ANIMATOR, true);
 
-        private void KeyDownClick(object sender, KeyEventArgs e) => CloseClick(sender, e);
+        private void KeyDownClick(object sender, KeyEventArgs e)
+        {
+            if (e.KeyValue == 13 || e.KeyValue == 27)
+            {
+                ButtonOkClick(sender, e);
+            }
+        }
     }
 }
