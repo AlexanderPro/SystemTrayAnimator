@@ -86,7 +86,7 @@ namespace SystemTrayAnimator
             lock (_lockObject)
             {
                 directoryName = _settings.DirectoryName;
-                supportedFileExtensions = _settings.SupportedFileExtensions;
+                supportedFileExtensions = _settings.FileExtensions;
                 includeSubdirectories = _settings.IncludeSubdirectories;
             }
 

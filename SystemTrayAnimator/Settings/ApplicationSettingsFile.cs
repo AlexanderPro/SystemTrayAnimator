@@ -88,7 +88,7 @@ namespace SystemTrayAnimator.Settings
             var rootElement = document.XPathSelectElement("/systemTrayAnimator");
             settings.DirectoryName = rootElement.XPathSelectElement("//directoryName").Value;
             settings.IncludeSubdirectories = rootElement.XPathSelectElement("//includeSubdirectories").Value.ToLower() == "true";
-            settings.SupportedFileExtensions = rootElement.XPathSelectElement("//supportedFileExtensions").Value;
+            settings.FileExtensions = rootElement.XPathSelectElement("//fileExtensions").Value;
             settings.Interval = int.Parse(rootElement.XPathSelectElement("//interval").Value);
             return settings;
         }
@@ -99,7 +99,7 @@ namespace SystemTrayAnimator.Settings
             document.Add(new XElement("systemTrayAnimator",
                                      new XElement("directoryName", settings.DirectoryName),
                                      new XElement("includeSubdirectories", settings.IncludeSubdirectories),
-                                     new XElement("supportedFileExtensions", settings.SupportedFileExtensions),
+                                     new XElement("fileExtensions", settings.FileExtensions),
                                      new XElement("interval", settings.Interval)));
             FileUtils.Save(fileName, document);
         }

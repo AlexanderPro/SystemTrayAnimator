@@ -38,16 +38,18 @@
             this.lblFileExtensions = new System.Windows.Forms.Label();
             this.chckIncludeSubdirectories = new System.Windows.Forms.CheckBox();
             this.btnBrowse = new System.Windows.Forms.Button();
+            this.lblInterval = new System.Windows.Forms.Label();
+            this.txtInterval = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(308, 182);
+            this.btnOk.Location = new System.Drawing.Point(308, 255);
             this.btnOk.Margin = new System.Windows.Forms.Padding(4);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(98, 32);
-            this.btnOk.TabIndex = 6;
+            this.btnOk.TabIndex = 8;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.ButtonOkClick);
@@ -64,11 +66,11 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(414, 182);
+            this.btnCancel.Location = new System.Drawing.Point(414, 255);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(99, 32);
-            this.btnCancel.TabIndex = 7;
+            this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.ButtonCancelClick);
@@ -77,10 +79,10 @@
             // 
             this.txtFileExtensions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFileExtensions.Location = new System.Drawing.Point(12, 101);
+            this.txtFileExtensions.Location = new System.Drawing.Point(11, 132);
             this.txtFileExtensions.Name = "txtFileExtensions";
             this.txtFileExtensions.Size = new System.Drawing.Size(501, 22);
-            this.txtFileExtensions.TabIndex = 4;
+            this.txtFileExtensions.TabIndex = 5;
             // 
             // lblDirectoryName
             // 
@@ -94,19 +96,19 @@
             // lblFileExtensions
             // 
             this.lblFileExtensions.AutoSize = true;
-            this.lblFileExtensions.Location = new System.Drawing.Point(13, 81);
+            this.lblFileExtensions.Location = new System.Drawing.Point(12, 112);
             this.lblFileExtensions.Name = "lblFileExtensions";
             this.lblFileExtensions.Size = new System.Drawing.Size(131, 17);
-            this.lblFileExtensions.TabIndex = 3;
+            this.lblFileExtensions.TabIndex = 4;
             this.lblFileExtensions.Text = "Icon file extensions:";
             // 
             // chckIncludeSubdirectories
             // 
             this.chckIncludeSubdirectories.AutoSize = true;
-            this.chckIncludeSubdirectories.Location = new System.Drawing.Point(12, 146);
+            this.chckIncludeSubdirectories.Location = new System.Drawing.Point(12, 69);
             this.chckIncludeSubdirectories.Name = "chckIncludeSubdirectories";
             this.chckIncludeSubdirectories.Size = new System.Drawing.Size(168, 21);
-            this.chckIncludeSubdirectories.TabIndex = 5;
+            this.chckIncludeSubdirectories.TabIndex = 3;
             this.chckIncludeSubdirectories.Text = "Include subdirectories";
             this.chckIncludeSubdirectories.UseVisualStyleBackColor = true;
             // 
@@ -119,12 +121,33 @@
             this.btnBrowse.TabIndex = 2;
             this.btnBrowse.Text = "...";
             this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.ButtonBrowseClick);
+            // 
+            // lblInterval
+            // 
+            this.lblInterval.AutoSize = true;
+            this.lblInterval.Location = new System.Drawing.Point(12, 177);
+            this.lblInterval.Name = "lblInterval";
+            this.lblInterval.Size = new System.Drawing.Size(152, 17);
+            this.lblInterval.TabIndex = 6;
+            this.lblInterval.Text = "Interval between icons:";
+            // 
+            // txtInterval
+            // 
+            this.txtInterval.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtInterval.Location = new System.Drawing.Point(11, 197);
+            this.txtInterval.Name = "txtInterval";
+            this.txtInterval.Size = new System.Drawing.Size(501, 22);
+            this.txtInterval.TabIndex = 7;
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(525, 236);
+            this.ClientSize = new System.Drawing.Size(525, 320);
+            this.Controls.Add(this.lblInterval);
+            this.Controls.Add(this.txtInterval);
             this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.chckIncludeSubdirectories);
             this.Controls.Add(this.lblFileExtensions);
@@ -157,5 +180,7 @@
         private System.Windows.Forms.Label lblFileExtensions;
         private System.Windows.Forms.CheckBox chckIncludeSubdirectories;
         private System.Windows.Forms.Button btnBrowse;
+        private System.Windows.Forms.Label lblInterval;
+        private System.Windows.Forms.TextBox txtInterval;
     }
 }
