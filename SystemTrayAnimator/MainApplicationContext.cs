@@ -35,7 +35,7 @@ namespace SystemTrayAnimator
                     throw new Exception($"Failed to read the settings.", e);
                 }
 
-                if (string.IsNullOrWhiteSpace(_settings.DirectoryName) || !Directory.Exists(_settings.DirectoryName))
+                if (!Directory.Exists(_settings.DirectoryName))
                 {
                     throw new Exception($"The directory {_settings.DirectoryName ?? string.Empty} does not exist.");
                 }
@@ -81,12 +81,12 @@ namespace SystemTrayAnimator
         private void ReadDirectory()
         {
             var directoryName = string.Empty;
-            var supportedFileExtensions = string.Empty;
+            var fileExtensions = string.Empty;
             var includeSubdirectories = false;
             lock (_lockObject)
             {
                 directoryName = _settings.DirectoryName;
-                supportedFileExtensions = _settings.FileExtensions;
+                fileExtensions = _settings.FileExtensions;
                 includeSubdirectories = _settings.IncludeSubdirectories;
             }
 
@@ -95,7 +95,7 @@ namespace SystemTrayAnimator
                 return;
             }
 
-            var fileNames = Directory.EnumerateFiles(directoryName, supportedFileExtensions, includeSubdirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).OrderBy(x => x).ToArray();
+            var fileNames = Directory.EnumerateFiles(directoryName, fileExtensions, includeSubdirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).OrderBy(x => x).ToArray();
             var frames = new FrameList(fileNames);
             lock (_lockObject)
             {
@@ -195,15 +195,23 @@ namespace SystemTrayAnimator
             if (_settingsForm == null || _settingsForm.IsDisposed || !_settingsForm.IsHandleCreated)
             {
                 _settingsForm = new SettingsForm(_settings);
-                if (_settingsForm.DialogResult == DialogResult.OK)
+                _settingsForm.OkClick += (sender, e) =>
                 {
-                    lock(_lockObject)
+                    lock (_lockObject)
                     {
-                        _settings = _settingsForm.Settings;
-                        ApplicationSettingsFile.Save(_settingsForm.Settings);
+                        _settings = e.Entity;
+                        ApplicationSettingsFile.Save(_settings);
+                        _watcher.Path = _settings.DirectoryName;
+                        _watcher.IncludeSubdirectories = _settings.IncludeSubdirectories;
+                        _watcher.Filter = _settings.Filter;
+                        _timer.Stop();
                     }
                     ReadDirectory();
-                }
+                    lock (_lockObject)
+                    {
+                        _timer.Start(_settings.Interval);
+                    }
+                };
             }
 
             _settingsForm.Show();

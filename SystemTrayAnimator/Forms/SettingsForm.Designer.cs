@@ -128,9 +128,9 @@
             this.lblInterval.AutoSize = true;
             this.lblInterval.Location = new System.Drawing.Point(12, 177);
             this.lblInterval.Name = "lblInterval";
-            this.lblInterval.Size = new System.Drawing.Size(152, 17);
+            this.lblInterval.Size = new System.Drawing.Size(184, 17);
             this.lblInterval.TabIndex = 6;
-            this.lblInterval.Text = "Interval between icons:";
+            this.lblInterval.Text = "Interval between icons (ms):";
             // 
             // txtInterval
             // 

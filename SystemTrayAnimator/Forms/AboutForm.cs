@@ -25,7 +25,7 @@ namespace SystemTrayAnimator.Forms
         {
             if (e.KeyValue == 13 || e.KeyValue == 27)
             {
-                ButtonOkClick(sender, e);
+                Close();
             }
         }
     }

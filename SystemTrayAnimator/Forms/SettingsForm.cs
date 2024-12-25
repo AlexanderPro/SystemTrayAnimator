@@ -8,11 +8,13 @@ namespace SystemTrayAnimator.Forms
 {
     partial class SettingsForm : Form
     {
-        public ApplicationSettings Settings { get; private set; }
+        private ApplicationSettings _settings;
+
+        public event EventHandler<EventArgs<ApplicationSettings>> OkClick;
 
         public SettingsForm(ApplicationSettings settings)
         {
-            Settings = settings;
+            _settings = settings;
             InitializeComponent();
             InitializeControls(settings);
         }
@@ -44,7 +46,7 @@ namespace SystemTrayAnimator.Forms
                 return;
             }
 
-            if (!int.TryParse(txtInterval.Text, out var interval))
+            if (!int.TryParse(txtInterval.Text, out var interval) || interval <= 0)
             {
                 txtInterval.SelectAll();
                 txtInterval.Focus();
@@ -52,7 +54,7 @@ namespace SystemTrayAnimator.Forms
                 return;
             }
 
-            Settings = new ApplicationSettings
+            var settings = new ApplicationSettings
             {
                 DirectoryName = txtDirectoryName.Text,
                 FileExtensions = txtFileExtensions.Text,
@@ -60,6 +62,12 @@ namespace SystemTrayAnimator.Forms
                 Interval = interval
             };
             DialogResult = DialogResult.OK;
+
+            if (!settings.Equals(_settings))
+            {
+                OkClick?.Invoke(this, new EventArgs<ApplicationSettings>(settings));
+            }
+
             Close();
         }
 

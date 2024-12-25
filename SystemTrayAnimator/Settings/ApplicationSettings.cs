@@ -56,7 +56,7 @@ namespace SystemTrayAnimator.Settings
                 return false;
             }
 
-            return Equals(other as ApplicationSettings);
+            return Equals((ApplicationSettings)other);
         }
 
         public bool Equals(ApplicationSettings other)
