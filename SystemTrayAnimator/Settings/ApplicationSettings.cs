@@ -8,8 +8,8 @@ namespace SystemTrayAnimator.Settings
     {
         private const string DefaultDirectoryName = "Icons";
         private const bool DefaultIncludeSubdirectories = false;
-        private const string DefaultFileExtensions = "*.ico";
-        private const int DefaultIntervalInMilliseconds = 200;
+        private const string DefaultFileExtensions = "*.png";
+        private const int DefaultIntervalInMilliseconds = 100;
 
         public string DirectoryName { get; set; }
 
@@ -20,8 +20,6 @@ namespace SystemTrayAnimator.Settings
         public int Interval { get; set; }
 
         public bool IsPaused { get; set; }
-
-        public string Filter => FileExtensions.Replace(',', '|').Replace(';', '|');
 
         public ApplicationSettings()
         {
