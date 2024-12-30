@@ -6,7 +6,7 @@ namespace SystemTrayAnimator.Settings
 {
     public class ApplicationSettings : ICloneable
     {
-        private const string DefaultDirectoryName = "Icons";
+        private const string DefaultDirectoryName = "Images";
         private const bool DefaultIncludeSubdirectories = false;
         private const string DefaultFileExtensions = "*.png";
         private const int DefaultIntervalInMilliseconds = 100;
