@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
+using System.Drawing;
 using System.Windows.Forms;
 using SystemTrayAnimator.Settings;
 using SystemTrayAnimator.Utils;
@@ -12,6 +13,7 @@ namespace SystemTrayAnimator
     {
         private readonly object _lockObject;
         private int _frameIndex;
+        private Icon _applicationIcon;
         private ApplicationSettings _settings;
         private AccurateTimer _timer;
         private SystemTrayMenu _systemTrayMenu;
@@ -44,6 +46,7 @@ namespace SystemTrayAnimator
                 _frameIndex = 0;
                 _frames = new FrameList();
                 _timer = new AccurateTimer(ShowFrame);
+                _applicationIcon = Properties.Resources.SystemTrayAnimator;
 
                 ReadDirectory();
 
@@ -62,7 +65,7 @@ namespace SystemTrayAnimator
                 _watcher.Path = _settings.DirectoryName;
                 _watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.Attributes;
                 _watcher.IncludeSubdirectories = _settings.IncludeSubdirectories;
-                _watcher.Filter = _settings.Filter;
+                _watcher.Filter = _settings.FileExtensions;
                 _watcher.Created += (sender, e) => { ReadDirectory(); };
                 _watcher.Changed += (sender, e) => { ReadDirectory(); };
                 _watcher.Renamed += (sender, e) => { ReadDirectory(); };
@@ -95,7 +98,10 @@ namespace SystemTrayAnimator
                 return;
             }
 
-            var fileNames = Directory.EnumerateFiles(directoryName, fileExtensions, includeSubdirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).OrderBy(x => x).ToArray();
+            var fileNames = Directory
+                .EnumerateFiles(directoryName, fileExtensions, includeSubdirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
+                .OrderBy(x => x)
+                .ToArray();
             var frames = new FrameList(fileNames);
             lock (_lockObject)
             {
@@ -114,11 +120,11 @@ namespace SystemTrayAnimator
 
         private void ShowFrame()
         {
-            lock(_lockObject)
+            lock (_lockObject)
             {
                 if (_frames.Count == 0)
                 {
-                    _systemTrayMenu.Icon.Icon = Properties.Resources.SystemTrayAnimator;
+                    _systemTrayMenu.Icon.Icon = _applicationIcon;
                 }
                 else if (_frames.Count == 1)
                 {
@@ -203,7 +209,7 @@ namespace SystemTrayAnimator
                         ApplicationSettingsFile.Save(_settings);
                         _watcher.Path = _settings.DirectoryName;
                         _watcher.IncludeSubdirectories = _settings.IncludeSubdirectories;
-                        _watcher.Filter = _settings.Filter;
+                        _watcher.Filter = _settings.FileExtensions;
                         _timer.Stop();
                     }
                     ReadDirectory();
