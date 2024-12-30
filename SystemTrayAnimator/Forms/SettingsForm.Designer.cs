@@ -98,9 +98,9 @@
             this.lblFileExtensions.AutoSize = true;
             this.lblFileExtensions.Location = new System.Drawing.Point(12, 112);
             this.lblFileExtensions.Name = "lblFileExtensions";
-            this.lblFileExtensions.Size = new System.Drawing.Size(131, 17);
+            this.lblFileExtensions.Size = new System.Drawing.Size(124, 17);
             this.lblFileExtensions.TabIndex = 4;
-            this.lblFileExtensions.Text = "Icon file extensions:";
+            this.lblFileExtensions.Text = "Icon file extension:";
             // 
             // chckIncludeSubdirectories
             // 
