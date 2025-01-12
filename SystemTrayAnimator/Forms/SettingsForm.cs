@@ -59,7 +59,8 @@ namespace SystemTrayAnimator.Forms
                 DirectoryName = txtDirectoryName.Text,
                 FileExtensions = txtFileExtensions.Text,
                 IncludeSubdirectories = chckIncludeSubdirectories.Checked,
-                Interval = interval
+                Interval = interval,
+                IsPaused = _settings.IsPaused
             };
             DialogResult = DialogResult.OK;
 

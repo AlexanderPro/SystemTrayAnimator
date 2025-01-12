@@ -210,12 +210,18 @@ namespace SystemTrayAnimator
                         _watcher.Path = _settings.DirectoryName;
                         _watcher.IncludeSubdirectories = _settings.IncludeSubdirectories;
                         _watcher.Filter = _settings.FileExtensions;
-                        _timer.Stop();
+                        if (!_settings.IsPaused)
+                        {
+                            _timer.Stop();
+                        }
                     }
                     ReadDirectory();
                     lock (_lockObject)
                     {
-                        _timer.Start(_settings.Interval);
+                        if (!_settings.IsPaused)
+                        {
+                            _timer.Start(_settings.Interval);
+                        }
                     }
                 };
             }
