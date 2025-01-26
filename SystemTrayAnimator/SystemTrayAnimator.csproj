@@ -681,6 +681,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\SystemTrayAnimator.png" />
+    <Content Include="Images\SystemTrayAnimator128.png" />
     <Content Include="SystemTrayAnimator.ico" />
   </ItemGroup>
   <ItemGroup />

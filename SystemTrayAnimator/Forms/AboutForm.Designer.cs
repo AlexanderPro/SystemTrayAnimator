@@ -45,7 +45,7 @@
             this.lblProductName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblProductName.Name = "lblProductName";
             this.lblProductName.Size = new System.Drawing.Size(98, 17);
-            this.lblProductName.TabIndex = 0;
+            this.lblProductName.TabIndex = 1;
             this.lblProductName.Text = "Product Name";
             // 
             // lblCopyright
@@ -55,7 +55,7 @@
             this.lblCopyright.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCopyright.Name = "lblCopyright";
             this.lblCopyright.Size = new System.Drawing.Size(68, 17);
-            this.lblCopyright.TabIndex = 1;
+            this.lblCopyright.TabIndex = 2;
             this.lblCopyright.Text = "Copyright";
             // 
             // linkUrl
@@ -65,7 +65,7 @@
             this.linkUrl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.linkUrl.Name = "linkUrl";
             this.linkUrl.Size = new System.Drawing.Size(36, 17);
-            this.linkUrl.TabIndex = 2;
+            this.linkUrl.TabIndex = 3;
             this.linkUrl.TabStop = true;
             this.linkUrl.Text = "URL";
             this.linkUrl.Click += new System.EventHandler(this.LinkClick);
@@ -73,23 +73,23 @@
             // btnOk
             // 
             this.btnOk.Location = new System.Drawing.Point(550, 37);
-            this.btnOk.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOk.Margin = new System.Windows.Forms.Padding(4);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(115, 37);
-            this.btnOk.TabIndex = 3;
+            this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.ButtonOkClick);
             // 
             // pbImage
             // 
-            this.pbImage.BackgroundImage = global::SystemTrayAnimator.Properties.Resources.SystemTrayAnimatorImage;
+            this.pbImage.BackgroundImage = global::SystemTrayAnimator.Properties.Resources.SystemTrayAnimator128;
             this.pbImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pbImage.InitialImage = null;
-            this.pbImage.Location = new System.Drawing.Point(5, 26);
-            this.pbImage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbImage.Location = new System.Drawing.Point(5, 17);
+            this.pbImage.Margin = new System.Windows.Forms.Padding(4);
             this.pbImage.Name = "pbImage";
-            this.pbImage.Size = new System.Drawing.Size(139, 124);
+            this.pbImage.Size = new System.Drawing.Size(128, 128);
             this.pbImage.TabIndex = 4;
             this.pbImage.TabStop = false;
             // 
@@ -106,7 +106,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutForm";
