@@ -680,6 +680,11 @@
     <Content Include="Images\Animations\Umbrella\Umbrella30.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Demo\Clock.gif" />
+    <Content Include="Images\Demo\GreenSignal.gif" />
+    <Content Include="Images\Demo\RedSignal.gif" />
+    <Content Include="Images\Demo\Timer.gif" />
+    <Content Include="Images\Demo\Umbrella.gif" />
     <Content Include="Images\SystemTrayAnimator.png" />
     <Content Include="Images\SystemTrayAnimator128.png" />
     <Content Include="SystemTrayAnimator.ico" />
