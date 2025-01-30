@@ -10,19 +10,19 @@ SystemTrayAnimator generates an animation using image files from a specified dir
 
 ## Demo
 
-Green Signal (10 FPS)
+Green Signal 10 FPS:  
 ![GreenSignal](./SystemTrayAnimator/Images/Demo/GreenSignal.gif)
 
-Red Signal (10 FPS)
+Red Signal 10 FPS:  
 ![RedSignal](./SystemTrayAnimator/Images/Demo/RedSignal.gif)
 
-Timer (1 FPS)
+Timer 1 FPS:  
 ![Timer](./SystemTrayAnimator/Images/Demo/Timer.gif)
 
-Clock (1 FPS)
+Clock 1 FPS:  
 ![Clock](./SystemTrayAnimator/Images/Demo/Clock.gif)
 
-Umbrella (10 FPS)
+Umbrella 10 FPS:  
 ![Umbrella](./SystemTrayAnimator/Images/Demo/Umbrella.gif)
 
 ## Install
