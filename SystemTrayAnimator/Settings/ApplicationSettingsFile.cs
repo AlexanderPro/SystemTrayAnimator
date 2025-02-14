@@ -86,10 +86,11 @@ namespace SystemTrayAnimator.Settings
             var settings = new ApplicationSettings();
             var document = XDocument.Load(stream);
             var rootElement = document.XPathSelectElement("/systemTrayAnimator");
-            settings.DirectoryName = rootElement.XPathSelectElement("//directoryName").Value;
-            settings.IncludeSubdirectories = rootElement.XPathSelectElement("//includeSubdirectories").Value.ToLower() == "true";
-            settings.FileExtensions = rootElement.XPathSelectElement("//fileExtensions").Value;
-            settings.Interval = int.Parse(rootElement.XPathSelectElement("//interval").Value);
+            settings.DirectoryName = rootElement.XPathSelectElement("//directoryName")?.Value ?? ApplicationSettings.DefaultDirectoryName;
+            settings.IncludeSubdirectories = rootElement.XPathSelectElement("//includeSubdirectories") != null ? rootElement.XPathSelectElement("//includeSubdirectories").Value.ToLower() == "true" : ApplicationSettings.DefaultIncludeSubdirectories;
+            settings.FileExtensions = rootElement.XPathSelectElement("//fileExtensions")?.Value ?? ApplicationSettings.DefaultFileExtensions;
+            settings.Interval = rootElement.XPathSelectElement("//interval") != null ? int.Parse(rootElement.XPathSelectElement("//interval").Value) : ApplicationSettings.DefaultIntervalInMilliseconds;
+            settings.HighDpiSupport = rootElement.XPathSelectElement("//highDpiSupport") != null ? rootElement.XPathSelectElement("//highDpiSupport").Value.ToLower() == "true" : ApplicationSettings.DefaultHighDpiSupport;
             return settings;
         }
 
@@ -100,7 +101,8 @@ namespace SystemTrayAnimator.Settings
                                      new XElement("directoryName", settings.DirectoryName),
                                      new XElement("includeSubdirectories", settings.IncludeSubdirectories),
                                      new XElement("fileExtensions", settings.FileExtensions),
-                                     new XElement("interval", settings.Interval)));
+                                     new XElement("interval", settings.Interval),
+                                     new XElement("highDpiSupport", settings.HighDpiSupport)));
             FileUtils.Save(fileName, document);
         }
     }

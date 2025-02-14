@@ -25,6 +25,7 @@ namespace SystemTrayAnimator.Forms
             txtFileExtensions.Text = settings.FileExtensions;
             chckIncludeSubdirectories.Checked = settings.IncludeSubdirectories;
             txtInterval.Text = settings.Interval.ToString();
+            chkHighDpiSupport.Checked = settings.HighDpiSupport;
             DialogResult = DialogResult.Cancel;
         }
 
@@ -60,6 +61,7 @@ namespace SystemTrayAnimator.Forms
                 FileExtensions = txtFileExtensions.Text,
                 IncludeSubdirectories = chckIncludeSubdirectories.Checked,
                 Interval = interval,
+                HighDpiSupport = chkHighDpiSupport.Checked,
                 IsPaused = _settings.IsPaused
             };
             DialogResult = DialogResult.OK;

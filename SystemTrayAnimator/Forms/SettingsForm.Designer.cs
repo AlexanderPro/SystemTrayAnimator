@@ -40,16 +40,17 @@
             this.btnBrowse = new System.Windows.Forms.Button();
             this.lblInterval = new System.Windows.Forms.Label();
             this.txtInterval = new System.Windows.Forms.TextBox();
+            this.chkHighDpiSupport = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(308, 255);
+            this.btnOk.Location = new System.Drawing.Point(307, 297);
             this.btnOk.Margin = new System.Windows.Forms.Padding(4);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(98, 32);
-            this.btnOk.TabIndex = 8;
+            this.btnOk.TabIndex = 9;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.ButtonOkClick);
@@ -66,11 +67,11 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(414, 255);
+            this.btnCancel.Location = new System.Drawing.Point(413, 297);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(99, 32);
-            this.btnCancel.TabIndex = 9;
+            this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.ButtonCancelClick);
@@ -141,11 +142,22 @@
             this.txtInterval.Size = new System.Drawing.Size(501, 22);
             this.txtInterval.TabIndex = 7;
             // 
+            // chkSupportHighDPI
+            // 
+            this.chkHighDpiSupport.AutoSize = true;
+            this.chkHighDpiSupport.Location = new System.Drawing.Point(12, 252);
+            this.chkHighDpiSupport.Name = "chkSupportHighDPI";
+            this.chkHighDpiSupport.Size = new System.Drawing.Size(199, 21);
+            this.chkHighDpiSupport.TabIndex = 8;
+            this.chkHighDpiSupport.Text = "Enable support of high DPI";
+            this.chkHighDpiSupport.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(525, 320);
+            this.ClientSize = new System.Drawing.Size(525, 357);
+            this.Controls.Add(this.chkHighDpiSupport);
             this.Controls.Add(this.lblInterval);
             this.Controls.Add(this.txtInterval);
             this.Controls.Add(this.btnBrowse);
@@ -182,5 +194,6 @@
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.Label lblInterval;
         private System.Windows.Forms.TextBox txtInterval;
+        private System.Windows.Forms.CheckBox chkHighDpiSupport;
     }
 }

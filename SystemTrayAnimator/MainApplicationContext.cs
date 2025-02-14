@@ -48,6 +48,12 @@ namespace SystemTrayAnimator
                 _timer = new AccurateTimer(ShowFrame);
                 _applicationIcon = Properties.Resources.SystemTrayAnimator;
 
+                // Enable support of high DPI
+                if (_settings.HighDpiSupport)
+                {
+                    SystemUtils.EnableHighDpiSupport();
+                }
+
                 ReadDirectory();
 
                 _systemTrayMenu = new SystemTrayMenu();

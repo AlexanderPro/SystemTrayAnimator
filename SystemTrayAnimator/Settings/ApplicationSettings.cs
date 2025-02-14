@@ -6,10 +6,11 @@ namespace SystemTrayAnimator.Settings
 {
     public class ApplicationSettings : ICloneable
     {
-        private const string DefaultDirectoryName = "Images";
-        private const bool DefaultIncludeSubdirectories = false;
-        private const string DefaultFileExtensions = "*.png";
-        private const int DefaultIntervalInMilliseconds = 100;
+        public const string DefaultDirectoryName = "Images";
+        public const bool DefaultIncludeSubdirectories = false;
+        public const string DefaultFileExtensions = "*.png";
+        public const int DefaultIntervalInMilliseconds = 100;
+        public const bool DefaultHighDpiSupport = true;
 
         public string DirectoryName { get; set; }
 
@@ -19,6 +20,8 @@ namespace SystemTrayAnimator.Settings
 
         public int Interval { get; set; }
 
+        public bool HighDpiSupport { get; set; }
+
         public bool IsPaused { get; set; }
 
         public ApplicationSettings()
@@ -27,6 +30,7 @@ namespace SystemTrayAnimator.Settings
             IncludeSubdirectories = DefaultIncludeSubdirectories;
             FileExtensions = DefaultFileExtensions;
             Interval = DefaultIntervalInMilliseconds;
+            HighDpiSupport = DefaultHighDpiSupport;
         }
 
         public object Clone() => new ApplicationSettings
@@ -34,7 +38,8 @@ namespace SystemTrayAnimator.Settings
             DirectoryName = DirectoryName,
             IncludeSubdirectories = IncludeSubdirectories,
             FileExtensions = FileExtensions,
-            Interval = Interval
+            Interval = Interval,
+            HighDpiSupport = HighDpiSupport
         };
 
         public override bool Equals(object other)
@@ -80,7 +85,7 @@ namespace SystemTrayAnimator.Settings
                 return false;
             }
 
-            if (IncludeSubdirectories != other.IncludeSubdirectories || Interval != other.Interval)
+            if (IncludeSubdirectories != other.IncludeSubdirectories || Interval != other.Interval || HighDpiSupport != other.HighDpiSupport)
             {
                 return false;
             }
@@ -95,6 +100,7 @@ namespace SystemTrayAnimator.Settings
             hashCode ^= FileExtensions.GetHashCode();
             hashCode ^= Interval.GetHashCode();
             hashCode ^= IncludeSubdirectories.GetHashCode();
+            hashCode ^= HighDpiSupport.GetHashCode();
             return hashCode;
         }
     }
