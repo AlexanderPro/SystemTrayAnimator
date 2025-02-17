@@ -90,6 +90,7 @@ namespace SystemTrayAnimator.Settings
             settings.IncludeSubdirectories = rootElement.XPathSelectElement("//includeSubdirectories") != null ? rootElement.XPathSelectElement("//includeSubdirectories").Value.ToLower() == "true" : ApplicationSettings.DefaultIncludeSubdirectories;
             settings.FileExtensions = rootElement.XPathSelectElement("//fileExtensions")?.Value ?? ApplicationSettings.DefaultFileExtensions;
             settings.Interval = rootElement.XPathSelectElement("//interval") != null ? int.Parse(rootElement.XPathSelectElement("//interval").Value) : ApplicationSettings.DefaultIntervalInMilliseconds;
+            settings.UseDelayFromFirstFrame = rootElement.XPathSelectElement("//useDelayFromFirstFrame") != null ? rootElement.XPathSelectElement("//useDelayFromFirstFrame").Value.ToLower() == "true" : ApplicationSettings.DefaultUseDelayFromFirstFrame;
             settings.HighDpiSupport = rootElement.XPathSelectElement("//highDpiSupport") != null ? rootElement.XPathSelectElement("//highDpiSupport").Value.ToLower() == "true" : ApplicationSettings.DefaultHighDpiSupport;
             return settings;
         }
@@ -102,6 +103,7 @@ namespace SystemTrayAnimator.Settings
                                      new XElement("includeSubdirectories", settings.IncludeSubdirectories),
                                      new XElement("fileExtensions", settings.FileExtensions),
                                      new XElement("interval", settings.Interval),
+                                     new XElement("useDelayFromFirstFrame", settings.UseDelayFromFirstFrame),
                                      new XElement("highDpiSupport", settings.HighDpiSupport)));
             FileUtils.Save(fileName, document);
         }

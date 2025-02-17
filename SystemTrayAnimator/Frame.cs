@@ -2,37 +2,30 @@
 using System.IO;
 using System.Drawing;
 using System.Security.Cryptography;
-using System.Runtime.InteropServices;
+using SystemTrayAnimator.Native;
 
 namespace SystemTrayAnimator
 {
     class Frame : IDisposable
     {
-        [DllImport("user32.dll")]
-        private extern static bool DestroyIcon(IntPtr handle);
-
         public string FileName { get; set; }
-
-        public string FileHash { get; set; }
 
         public Icon Icon { get; set; }
 
         public IntPtr IconHandle { get; set; } = IntPtr.Zero;
 
-        public static Frame Parse(string fullFileName)
+        public static Frame Parse(string fileName)
         {
             var iconHandle = IntPtr.Zero;
             try
             {
-                if (!File.Exists(fullFileName))
+                if (!File.Exists(fileName))
                 {
                     return null;
                 }
-                var fileName = Path.GetFileName(fullFileName);
-                using var fileStream = new FileStream(fullFileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                using var fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
                 using var sha256 = SHA256.Create();
                 var hashBytes = sha256.ComputeHash(fileStream);
-                var hashString = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
                 fileStream.Position = 0;
                 using var bitmap = new Bitmap(fileStream);
                 iconHandle = bitmap.GetHicon();
@@ -40,7 +33,6 @@ namespace SystemTrayAnimator
                 return new Frame
                 {
                     FileName = fileName,
-                    FileHash = hashString,
                     Icon = icon,
                     IconHandle = iconHandle
                 };
@@ -49,7 +41,7 @@ namespace SystemTrayAnimator
             {
                 if (iconHandle != IntPtr.Zero)
                 {
-                    DestroyIcon(iconHandle);
+                    User32.DestroyIcon(iconHandle);
                     iconHandle = IntPtr.Zero;
                 }
                 return null;
@@ -93,8 +85,7 @@ namespace SystemTrayAnimator
                 return false;
             }
 
-            if (string.Compare(FileName, other.FileName, StringComparison.CurrentCultureIgnoreCase) != 0 ||
-                string.Compare(FileHash, other.FileHash, StringComparison.CurrentCultureIgnoreCase) != 0)
+            if (string.Compare(FileName, other.FileName, StringComparison.CurrentCultureIgnoreCase) != 0)
             {
                 return false;
             }
@@ -106,7 +97,7 @@ namespace SystemTrayAnimator
         {
             var hashCode = 0;
             hashCode ^= FileName.GetHashCode();
-            hashCode ^= FileHash.GetHashCode();
+            hashCode ^= IconHandle.GetHashCode();
             return hashCode;
         }
 
@@ -122,7 +113,7 @@ namespace SystemTrayAnimator
             {
                 if (IconHandle != IntPtr.Zero)
                 {
-                    DestroyIcon(IconHandle);
+                    User32.DestroyIcon(IconHandle);
                     IconHandle = IntPtr.Zero;
                 }
                 Icon?.Dispose();

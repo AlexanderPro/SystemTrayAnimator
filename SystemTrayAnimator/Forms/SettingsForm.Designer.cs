@@ -41,16 +41,17 @@
             this.lblInterval = new System.Windows.Forms.Label();
             this.txtInterval = new System.Windows.Forms.TextBox();
             this.chkHighDpiSupport = new System.Windows.Forms.CheckBox();
+            this.chkUseDelayFromFirstFrame = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(307, 297);
+            this.btnOk.Location = new System.Drawing.Point(307, 310);
             this.btnOk.Margin = new System.Windows.Forms.Padding(4);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(98, 32);
-            this.btnOk.TabIndex = 9;
+            this.btnOk.TabIndex = 10;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.ButtonOkClick);
@@ -67,11 +68,11 @@
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(413, 297);
+            this.btnCancel.Location = new System.Drawing.Point(413, 310);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(99, 32);
-            this.btnCancel.TabIndex = 10;
+            this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.ButtonCancelClick);
@@ -84,6 +85,7 @@
             this.txtFileExtensions.Name = "txtFileExtensions";
             this.txtFileExtensions.Size = new System.Drawing.Size(501, 22);
             this.txtFileExtensions.TabIndex = 5;
+            this.txtFileExtensions.TextChanged += new System.EventHandler(this.FileExtensionsTextChanged);
             // 
             // lblDirectoryName
             // 
@@ -106,6 +108,7 @@
             // chckIncludeSubdirectories
             // 
             this.chckIncludeSubdirectories.AutoSize = true;
+            this.chckIncludeSubdirectories.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.chckIncludeSubdirectories.Location = new System.Drawing.Point(12, 69);
             this.chckIncludeSubdirectories.Name = "chckIncludeSubdirectories";
             this.chckIncludeSubdirectories.Size = new System.Drawing.Size(168, 21);
@@ -142,21 +145,34 @@
             this.txtInterval.Size = new System.Drawing.Size(501, 22);
             this.txtInterval.TabIndex = 7;
             // 
-            // chkSupportHighDPI
+            // chkHighDpiSupport
             // 
             this.chkHighDpiSupport.AutoSize = true;
-            this.chkHighDpiSupport.Location = new System.Drawing.Point(12, 252);
-            this.chkHighDpiSupport.Name = "chkSupportHighDPI";
+            this.chkHighDpiSupport.Location = new System.Drawing.Point(11, 273);
+            this.chkHighDpiSupport.Name = "chkHighDpiSupport";
             this.chkHighDpiSupport.Size = new System.Drawing.Size(199, 21);
-            this.chkHighDpiSupport.TabIndex = 8;
+            this.chkHighDpiSupport.TabIndex = 9;
             this.chkHighDpiSupport.Text = "Enable support of high DPI";
             this.chkHighDpiSupport.UseVisualStyleBackColor = true;
+            // 
+            // chkUseDelayFromFirstFrame
+            // 
+            this.chkUseDelayFromFirstFrame.AutoSize = true;
+            this.chkUseDelayFromFirstFrame.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chkUseDelayFromFirstFrame.Location = new System.Drawing.Point(11, 225);
+            this.chkUseDelayFromFirstFrame.Name = "chkUseDelayFromFirstFrame";
+            this.chkUseDelayFromFirstFrame.Size = new System.Drawing.Size(297, 21);
+            this.chkUseDelayFromFirstFrame.TabIndex = 8;
+            this.chkUseDelayFromFirstFrame.Text = "Use a delay from the first frame as Interval";
+            this.chkUseDelayFromFirstFrame.UseVisualStyleBackColor = true;
+            this.chkUseDelayFromFirstFrame.CheckedChanged += new System.EventHandler(this.UseDelayFromFirstFrameCheckedChanged);
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(525, 357);
+            this.ClientSize = new System.Drawing.Size(525, 369);
+            this.Controls.Add(this.chkUseDelayFromFirstFrame);
             this.Controls.Add(this.chkHighDpiSupport);
             this.Controls.Add(this.lblInterval);
             this.Controls.Add(this.txtInterval);
@@ -195,5 +211,6 @@
         private System.Windows.Forms.Label lblInterval;
         private System.Windows.Forms.TextBox txtInterval;
         private System.Windows.Forms.CheckBox chkHighDpiSupport;
+        private System.Windows.Forms.CheckBox chkUseDelayFromFirstFrame;
     }
 }

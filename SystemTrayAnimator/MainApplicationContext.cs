@@ -12,15 +12,16 @@ namespace SystemTrayAnimator
     class MainApplicationContext : ApplicationContext
     {
         private readonly object _lockObject;
-        private int _frameIndex;
-        private Icon _applicationIcon;
+        private readonly Icon _applicationIcon;
+        private readonly SystemTrayMenu _systemTrayMenu;
+        private readonly FileSystemWatcher _watcher;
+        private readonly AccurateTimer _timer;
         private ApplicationSettings _settings;
-        private AccurateTimer _timer;
-        private SystemTrayMenu _systemTrayMenu;
-        private FileSystemWatcher _watcher;
         private FrameList _frames;
         private AboutForm _aboutForm;
         private SettingsForm _settingsForm;
+        private int _frameIndex;
+        private int? _gifInterval;
 
         public bool InitializationError { get; }
 
@@ -55,6 +56,7 @@ namespace SystemTrayAnimator
                 }
 
                 ReadDirectory();
+                ReadGifInterval();
 
                 _systemTrayMenu = new SystemTrayMenu();
                 _systemTrayMenu.MenuItemAutoStartClick += MenuItemAutoStartClick;
@@ -72,12 +74,12 @@ namespace SystemTrayAnimator
                 _watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.Attributes;
                 _watcher.IncludeSubdirectories = _settings.IncludeSubdirectories;
                 _watcher.Filter = _settings.FileExtensions;
-                _watcher.Created += (sender, e) => { ReadDirectory(); };
-                _watcher.Changed += (sender, e) => { ReadDirectory(); };
-                _watcher.Renamed += (sender, e) => { ReadDirectory(); };
-                _watcher.Deleted += (sender, e) => { ReadDirectory(); };
+                _watcher.Created += (sender, e) => { ReadDirectory(); ReadGifInterval(); };
+                _watcher.Changed += (sender, e) => { ReadDirectory(); ReadGifInterval(); };
+                _watcher.Renamed += (sender, e) => { ReadDirectory(); ReadGifInterval(); };
+                _watcher.Deleted += (sender, e) => { ReadDirectory(); ReadGifInterval(); };
                 _watcher.EnableRaisingEvents = true;
-                _timer.Start(_settings.Interval);
+                _timer.Start(_gifInterval ?? _settings.Interval);
             }
             catch (Exception ex)
             {
@@ -108,7 +110,7 @@ namespace SystemTrayAnimator
                 .EnumerateFiles(directoryName, fileExtensions, includeSubdirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly)
                 .OrderBy(x => x)
                 .ToArray();
-            var frames = new FrameList(fileNames);
+            var frames = FrameList.ParseFiles(fileNames);
             lock (_lockObject)
             {
                 if (!_frames.Equals(frames))
@@ -120,6 +122,23 @@ namespace SystemTrayAnimator
                 else
                 {
                     ClearFrames(frames);
+                }
+            }
+        }
+
+        private void ReadGifInterval()
+        {
+            lock (_lockObject)
+            {
+                var frame = _frames.FirstOrDefault(x => Path.GetExtension(x.FileName).ToLower() == ".gif");
+                if (frame != null && _settings.UseDelayFromFirstFrame)
+                {
+                    using var image = Image.FromFile(frame.FileName);
+                    _gifInterval = SystemUtils.GetGifFrameDuration(image);
+                }
+                else
+                {
+                    _gifInterval = null;
                 }
             }
         }
@@ -180,7 +199,7 @@ namespace SystemTrayAnimator
                 if (_settings.IsPaused)
                 {
                     _settings.IsPaused = !_settings.IsPaused;
-                    _timer.Start(_settings.Interval);
+                    _timer.Start(_gifInterval ?? _settings.Interval);
                     ((ToolStripMenuItem)sender).Checked = _settings.IsPaused;
                 }
                 else
@@ -222,11 +241,12 @@ namespace SystemTrayAnimator
                         }
                     }
                     ReadDirectory();
+                    ReadGifInterval();
                     lock (_lockObject)
                     {
                         if (!_settings.IsPaused)
                         {
-                            _timer.Start(_settings.Interval);
+                            _timer.Start(_gifInterval ?? _settings.Interval);
                         }
                     }
                 };

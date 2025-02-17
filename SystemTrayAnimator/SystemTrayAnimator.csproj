@@ -693,6 +693,24 @@
     <Content Include="Images\Demo\RedSignal.gif" />
     <Content Include="Images\Demo\Timer.gif" />
     <Content Include="Images\Demo\Umbrella.gif" />
+    <Content Include="Images\Gifs\car.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Gifs\cup.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Gifs\man.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Gifs\phone.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Gifs\rocket.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Gifs\target.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\SystemTrayAnimator.png" />
     <Content Include="Images\SystemTrayAnimator128.png" />
     <Content Include="SystemTrayAnimator.ico" />
@@ -701,7 +719,13 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>powershell Compress-Archive -Path '$(TargetDir)Images\Animations\' -DestinationPath '$(TargetDir)Images\Animations.zip' -Force
-copy /Y "$(TargetDir)Images\Animations\Umbrella\*.*" "$(TargetDir)Images\"
-rd /S /Q "$(TargetDir)Images\Animations\"</PostBuildEvent>
+powershell Compress-Archive -Path '$(TargetDir)Images\Gifs\' -DestinationPath '$(TargetDir)Images\Gifs.zip' -Force
+copy /Y "$(TargetDir)Images\Gifs\rocket.gif" "$(TargetDir)Images\"
+rd /S /Q "$(TargetDir)Images\Animations\"
+rd /S /Q "$(TargetDir)Images\Gifs\"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

@@ -17,6 +17,7 @@ namespace SystemTrayAnimator.Forms
             _settings = settings;
             InitializeComponent();
             InitializeControls(settings);
+            UpdateControls();
         }
 
         private void InitializeControls(ApplicationSettings settings)
@@ -25,6 +26,7 @@ namespace SystemTrayAnimator.Forms
             txtFileExtensions.Text = settings.FileExtensions;
             chckIncludeSubdirectories.Checked = settings.IncludeSubdirectories;
             txtInterval.Text = settings.Interval.ToString();
+            chkUseDelayFromFirstFrame.Checked = settings.UseDelayFromFirstFrame;
             chkHighDpiSupport.Checked = settings.HighDpiSupport;
             DialogResult = DialogResult.Cancel;
         }
@@ -61,6 +63,7 @@ namespace SystemTrayAnimator.Forms
                 FileExtensions = txtFileExtensions.Text,
                 IncludeSubdirectories = chckIncludeSubdirectories.Checked,
                 Interval = interval,
+                UseDelayFromFirstFrame = chkUseDelayFromFirstFrame.Checked,
                 HighDpiSupport = chkHighDpiSupport.Checked,
                 IsPaused = _settings.IsPaused
             };
@@ -94,6 +97,16 @@ namespace SystemTrayAnimator.Forms
             }
         }
 
+        private void UseDelayFromFirstFrameCheckedChanged(object sender, EventArgs e)
+        {
+            UpdateControls();
+        }
+
+        private void FileExtensionsTextChanged(object sender, EventArgs e)
+        {
+            UpdateControls();
+        }
+
         private void FormKeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyValue == 13)
@@ -105,6 +118,13 @@ namespace SystemTrayAnimator.Forms
             {
                 ButtonCancelClick(sender, e);
             }
+        }
+
+        private void UpdateControls()
+        {
+            var isGifExtension = txtFileExtensions.Text.ToLower().Contains("gif");
+            chkUseDelayFromFirstFrame.Enabled = isGifExtension;
+            txtInterval.Enabled = !chkUseDelayFromFirstFrame.Checked || !isGifExtension;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 using System.IO;
+using System.Drawing;
 using Microsoft.Win32;
 using SystemTrayAnimator.Native;
 using SystemTrayAnimator.Native.Enums;
@@ -111,6 +112,18 @@ namespace SystemTrayAnimator.Utils
             {
                 User32.SetProcessDPIAware();
             }
+        }
+
+        /// <summary>
+        /// https://stackoverflow.com/questions/3785031/getting-the-frame-duration-of-an-animated-gif
+        /// </summary>
+        public static int GetGifFrameDuration(Image image)
+        {
+            // FrameDelay in libgdiplus
+            var item = image.GetPropertyItem(0x5100);
+            // Time is in milliseconds
+            var duration = (item.Value[0] + item.Value[1] * 256) * 10;
+            return duration;
         }
     }
 }

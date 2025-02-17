@@ -8,8 +8,9 @@ namespace SystemTrayAnimator.Settings
     {
         public const string DefaultDirectoryName = "Images";
         public const bool DefaultIncludeSubdirectories = false;
-        public const string DefaultFileExtensions = "*.png";
-        public const int DefaultIntervalInMilliseconds = 100;
+        public const string DefaultFileExtensions = "*.gif";
+        public const int DefaultIntervalInMilliseconds = 50;
+        public const bool DefaultUseDelayFromFirstFrame = false;
         public const bool DefaultHighDpiSupport = true;
 
         public string DirectoryName { get; set; }
@@ -19,6 +20,8 @@ namespace SystemTrayAnimator.Settings
         public string FileExtensions { get; set; }
 
         public int Interval { get; set; }
+        
+        public bool UseDelayFromFirstFrame { get; set; }
 
         public bool HighDpiSupport { get; set; }
 
@@ -30,6 +33,7 @@ namespace SystemTrayAnimator.Settings
             IncludeSubdirectories = DefaultIncludeSubdirectories;
             FileExtensions = DefaultFileExtensions;
             Interval = DefaultIntervalInMilliseconds;
+            UseDelayFromFirstFrame = DefaultUseDelayFromFirstFrame;
             HighDpiSupport = DefaultHighDpiSupport;
         }
 
@@ -39,6 +43,7 @@ namespace SystemTrayAnimator.Settings
             IncludeSubdirectories = IncludeSubdirectories,
             FileExtensions = FileExtensions,
             Interval = Interval,
+            UseDelayFromFirstFrame = UseDelayFromFirstFrame,
             HighDpiSupport = HighDpiSupport
         };
 
@@ -85,7 +90,8 @@ namespace SystemTrayAnimator.Settings
                 return false;
             }
 
-            if (IncludeSubdirectories != other.IncludeSubdirectories || Interval != other.Interval || HighDpiSupport != other.HighDpiSupport)
+            if (IncludeSubdirectories != other.IncludeSubdirectories || Interval != other.Interval || 
+                UseDelayFromFirstFrame != other.UseDelayFromFirstFrame || HighDpiSupport != other.HighDpiSupport)
             {
                 return false;
             }
@@ -97,9 +103,10 @@ namespace SystemTrayAnimator.Settings
         {
             var hashCode = 0;
             hashCode ^= DirectoryName.GetHashCode();
+            hashCode ^= IncludeSubdirectories.GetHashCode();
             hashCode ^= FileExtensions.GetHashCode();
             hashCode ^= Interval.GetHashCode();
-            hashCode ^= IncludeSubdirectories.GetHashCode();
+            hashCode ^= UseDelayFromFirstFrame.GetHashCode();
             hashCode ^= HighDpiSupport.GetHashCode();
             return hashCode;
         }

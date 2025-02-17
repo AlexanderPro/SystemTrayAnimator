@@ -1,19 +1,62 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Collections.Generic;
+using SystemTrayAnimator.Native;
 
 namespace SystemTrayAnimator
 {
     class FrameList : List<Frame>
     {
-        public FrameList(params string[] fullFileNames)
+        public static FrameList ParseFiles(params string[] fileNames)
         {
-            foreach (var fullFileName in fullFileNames)
+            var frameList = new FrameList();
+            foreach (var fileName in fileNames)
             {
-                var frame = Frame.Parse(fullFileName);
-                if (frame != null)
+                var fileExtension = Path.GetExtension(fileName);
+                if (fileExtension.ToLower() == ".gif")
                 {
-                    Add(frame);
+                    var iconHandle = IntPtr.Zero;
+                    try
+                    {
+                        using var image = Image.FromFile(fileName);
+                        var dimension = new FrameDimension(image.FrameDimensionsList[0]);
+                        int frameCount = image.GetFrameCount(dimension);
+                        for (var frameIndex = 0; frameIndex < frameCount; frameIndex++)
+                        {
+                            image.SelectActiveFrame(dimension, frameIndex);
+                            using var bitmap = new Bitmap(image);
+                            iconHandle = bitmap.GetHicon();
+                            var icon = Icon.FromHandle(iconHandle);
+                            var frame = new Frame
+                            {
+                                FileName = fileName,
+                                Icon = icon,
+                                IconHandle = iconHandle
+                            };
+                            frameList.Add(frame);
+                        }
+                    }
+                    catch
+                    {
+                        if (iconHandle != IntPtr.Zero)
+                        {
+                            User32.DestroyIcon(iconHandle);
+                            iconHandle = IntPtr.Zero;
+                        }
+                    }
+                }
+                else
+                {
+                    var frame = Frame.Parse(fileName);
+                    if (frame != null)
+                    {
+                        frameList.Add(frame);
+                    }
                 }
             }
+            return frameList;
         }
 
         public override bool Equals(object other)
