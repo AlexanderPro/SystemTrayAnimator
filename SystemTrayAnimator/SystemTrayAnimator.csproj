@@ -688,27 +688,33 @@
     <Content Include="Images\Animations\Umbrella\Umbrella30.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Demo\Car.gif" />
     <Content Include="Images\Demo\Clock.gif" />
+    <Content Include="Images\Demo\Cup.gif" />
     <Content Include="Images\Demo\GreenSignal.gif" />
+    <Content Include="Images\Demo\Phone.gif" />
     <Content Include="Images\Demo\RedSignal.gif" />
+    <Content Include="Images\Demo\Rocket.gif" />
+    <Content Include="Images\Demo\Target.gif" />
     <Content Include="Images\Demo\Timer.gif" />
     <Content Include="Images\Demo\Umbrella.gif" />
-    <Content Include="Images\Gifs\car.gif">
+    <Content Include="Images\Demo\Walking.gif" />
+    <Content Include="Images\Gifs\Car.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Gifs\cup.gif">
+    <Content Include="Images\Gifs\Cup.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Gifs\man.gif">
+    <Content Include="Images\Gifs\Phone.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Gifs\phone.gif">
+    <Content Include="Images\Gifs\Rocket.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Gifs\rocket.gif">
+    <Content Include="Images\Gifs\Target.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Gifs\target.gif">
+    <Content Include="Images\Gifs\Walking.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\SystemTrayAnimator.png" />
