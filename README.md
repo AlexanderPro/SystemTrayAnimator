@@ -25,6 +25,26 @@ Clock 1 FPS:
 Umbrella 10 FPS:  
 ![Umbrella](./SystemTrayAnimator/Images/Demo/Umbrella.gif)
 
+## Demo (Gif files)
+
+Rocket 20 FPS:  
+![Rocket](./SystemTrayAnimator/Images/Demo/Rocket.gif)
+
+Car 20 FPS:  
+![Car](./SystemTrayAnimator/Images/Demo/Car.gif)
+
+Walking 20 FPS:  
+![Walking](./SystemTrayAnimator/Images/Demo/Walking.gif)
+
+Cup 20 FPS:  
+![Cup](./SystemTrayAnimator/Images/Demo/Cup.gif)
+
+Phone 20 FPS:  
+![Phone](./SystemTrayAnimator/Images/Demo/Phone.gif)
+
+Target 20 FPS:  
+![Target](./SystemTrayAnimator/Images/Demo/Target.gif)
+
 ## Install
 
 * Download the [SystemTrayAnimator](https://github.com/AlexanderPro/SystemTrayAnimator/releases) in the zip file
